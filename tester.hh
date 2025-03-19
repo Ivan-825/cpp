@@ -8,6 +8,8 @@
 
 class Tester {
 private:
+    static inline bool init = false;
+
     static inline const char* GREEN = "\033[32m";
     static inline const char* RED = "\033[31m";
     static inline const char* CYAN = "\033[36m";
@@ -16,6 +18,22 @@ private:
     static inline int all = 0;
     static inline int succ = 0;
     static inline int current = 0;
+
+    
+
+    Tester() {
+        init = true;
+        std::cout << CYAN << "\nTesting Framework by Ivan\n\n" << DEF;
+    }
+
+    ~Tester() {
+        if (succ == all) {
+            std::cout << GREEN << "\n\n[ALL " << CYAN << succ << GREEN << " tests run successfully!]\n" << DEF;
+        }
+        else {
+            std::cout << RED << "\n\n[Out of " << CYAN << all << RED << " tests " << CYAN << succ << RED << " run successfully!]\n" << DEF;
+        }
+    }
 
     template<typename T, typename D>
 
@@ -26,7 +44,7 @@ private:
             if (not (std::is_array<T>() && std::is_array<D>())) throw std::invalid_argument("Illegal comparison between array and non array!");
         } catch (const std::exception& e) {
             err += e.what();
-            err += "\n";
+            //err += "\n";
             success = false;
         }
         
@@ -96,24 +114,12 @@ private:
 
 public:
 
-    Tester() {
-        std::cout << CYAN << "\nTesting Framework by Ivan\n\n" << DEF;
-    }
-
-    ~Tester() {
-        if (succ == all) {
-            std::cout << GREEN << "\n\n[ALL " << CYAN << succ << GREEN << " tests run successfully!]\n" << DEF;
-        }
-        else {
-            std::cout << RED << "\n\n[Out of " << CYAN << all << RED << " tests " << CYAN << succ << RED << " run successfully!]\n" << DEF;
-        }
-    }
-
 
 
     template<typename T, typename D>
 
     static void assertEquals(const T& t, const D& d) {
+        if (!init) static Tester tester; //
 
         if constexpr(std::is_array<T>() || std::is_array<D>()){
             assertArrays(t, d);
