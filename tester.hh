@@ -131,4 +131,9 @@ public:
     }
 };
 
+template<typename T, typename D>
+inline void assertEquals(const T& t, const D& d) {
+    Tester::assertEquals(t, d);
+}
+
 #endif
