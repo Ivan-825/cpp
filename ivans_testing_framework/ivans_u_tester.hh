@@ -1,7 +1,6 @@
 #ifndef IVANS_U_TESTER_H
 #define IVANS_U_TESTER_H
 
-#include <cassert>
 #include <iostream>
 #include <type_traits>
 #include <string>
@@ -39,9 +38,9 @@ private:
 
     static void assertArrays(const T& t, const D& d) {
         bool success = true;
-        std::string err = "";
+        std::string err = "\n";
         try {
-            if (not (std::is_array<T>() && std::is_array<D>())) throw std::invalid_argument("Illegal comparison between array and non array!");
+            if (not (std::is_array<T>() && std::is_array<D>())) throw std::invalid_argument("   Illegal comparison between array and non array!");
         } catch (const std::exception& e) {
             err += e.what();
             //err += "\n";
@@ -53,7 +52,7 @@ private:
                     || not (std::is_arithmetic<std::remove_all_extents_t<D>>())) {
                     
                     success = false;
-                    err += "Arrays are of uncomparable types!";
+                    err += "    Arrays are of uncomparable types!";
                 }
             //throw std::invalid_argument("Illegal comparison: arrays are not of same types!");
         }
@@ -61,7 +60,7 @@ private:
         int lend = sizeof(d) / sizeof(d[0]);
 
         if (lent != lend && success) {
-            err += ("The two arrays differ in length!: Length of first array is[" +
+            err += ("   The two arrays differ in length!: Length of first array is[" +
                 std::to_string(lent) + "] and the length of second array is [" + std::to_string(lend) + "].");
             success = false;
         }
@@ -73,8 +72,9 @@ private:
             for (int i = 0; i < lent; i++) {
                 if (t[i] != d[i]) {
                     success = false;
-                    err += "    Excepted: " + std::to_string(t[i]) +
-                        ", but actual was: " + std::to_string(d[i]) + "\n";
+                    err += "    Excepted: '" + std::to_string(t[i]) +
+                        "', but actual was: '" + std::to_string(d[i]) + "'  At index:[" + std::to_string(i)
+                        + "]\n";
                 }
             }
         }
