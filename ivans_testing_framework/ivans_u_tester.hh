@@ -1,5 +1,5 @@
-#ifndef IVANS_TESTER_H
-#define IVANS_TESTER_H
+#ifndef IVANS_U_TESTER_H
+#define IVANS_U_TESTER_H
 
 #include <cassert>
 #include <iostream>
