@@ -5,14 +5,11 @@
 #include <type_traits>
 #include <string>
 
+#include "console_colors.hh"
+
 class Tester {
 private:
     static inline bool init = false;
-
-    static inline const char* GREEN = "\033[32m";
-    static inline const char* RED = "\033[31m";
-    static inline const char* CYAN = "\033[36m";
-    static inline const char* DEF = "\033[0m";
     
     static inline int all = 0;
     static inline int succ = 0;
